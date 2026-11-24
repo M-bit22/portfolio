@@ -11,15 +11,15 @@ import { JOURNEY, PROFILE, PROJECTS, SKILLS } from "@/data/portfolio";
 const HERO_LINES: { cmd: string; out: string[] }[] = [
   {
     cmd: "whoami",
-    out: ["Muhammad Ali Waqas — AI Engineer", "Lahore, Pakistan · open to junior AI / ML roles"],
+    out: ["Muhammad Ali Waqas — AI Engineer", "Lahore, Pakistan · open to AI Engineer internships / junior roles"],
   },
   {
     cmd: "cat what-i-build.txt",
-    out: ["ML products people can actually use —", "fake-news detection, full-stack apps, voice AI."],
+    out: ["AI apps that answer from real documents —", "RAG, LLM backends, and voice AI."],
   },
   {
     cmd: "ls projects/",
-    out: ["truthlens/   job-tracker/   travel-advisor/"],
+    out: ["cryptoinsight/  policy-qa/  finwise/  truthlens/", "supportpearlz/  travel-advisor/  job-tracker/"],
   },
   {
     cmd: "echo $STATUS",
@@ -106,22 +106,27 @@ type NodeId = string;
 
 const TREE: { id: NodeId; label: string; kind: "file" | "folder"; children?: NodeId[]; hint?: string }[] = [
   { id: "about.md", label: "about.md", kind: "file", hint: "who I am" },
-  { id: "projects", label: "projects/", kind: "folder", children: ["projects/truthlens", "projects/tracker", "projects/travel"] },
+  { id: "projects", label: "projects/", kind: "folder", children: ["projects/cryptoinsight", "projects/policy", "projects/finwise", "projects/truthlens", "projects/support", "projects/travel", "projects/tracker"] },
+  { id: "projects/cryptoinsight", label: "cryptoinsight.md", kind: "file", hint: "FYP · RAG" },
+  { id: "projects/policy", label: "policy-qa.md", kind: "file", hint: "RAG · PDFs" },
+  { id: "projects/finwise", label: "finwise.md", kind: "file", hint: "AI finance" },
   { id: "projects/truthlens", label: "truthlens.md", kind: "file", hint: "98.7% accuracy" },
-  { id: "projects/tracker", label: "job-tracker.md", kind: "file", hint: "full-stack" },
+  { id: "projects/support", label: "supportpearlz.md", kind: "file", hint: "RAG support" },
   { id: "projects/travel", label: "travel-advisor.md", kind: "file", hint: "voice AI" },
-  { id: "skills", label: "skills/", kind: "folder", children: ["skills/ai", "skills/data", "skills/web", "skills/tools"] },
-  { id: "skills/ai", label: "ai-ml.txt", kind: "file", hint: "Python · LangChain · RAG" },
-  { id: "skills/data", label: "data.txt", kind: "file", hint: "Pandas · NumPy" },
-  { id: "skills/web", label: "web.txt", kind: "file", hint: "React · Next.js · Node" },
-  { id: "skills/tools", label: "tools.txt", kind: "file", hint: "Git · Docker" },
+  { id: "projects/tracker", label: "job-tracker.md", kind: "file", hint: "full-stack" },
+  { id: "skills", label: "skills/", kind: "folder", children: ["skills/ai", "skills/ml", "skills/web", "skills/automation", "skills/tools"] },
+  { id: "skills/ai", label: "ai-rag.txt", kind: "file", hint: "LangChain · RAG · Gemini" },
+  { id: "skills/ml", label: "ml-foundations.txt", kind: "file", hint: "Scikit-learn · PyTorch" },
+  { id: "skills/web", label: "web.txt", kind: "file", hint: "Flask · React · Next.js" },
+  { id: "skills/automation", label: "automation.txt", kind: "file", hint: "n8n · CrewAI" },
+  { id: "skills/tools", label: "tools.txt", kind: "file", hint: "Git · Docker · Postman" },
   { id: "journey.log", label: "journey.log", kind: "file", hint: "how I got here" },
   { id: "contact.md", label: "contact.md", kind: "file", hint: "say hello" },
 ];
 
 const TOP_LEVEL: NodeId[] = ["about.md", "projects", "skills", "journey.log", "contact.md"];
-const SKILL_BY_ID: Record<string, number> = { "skills/ai": 0, "skills/data": 1, "skills/web": 2, "skills/tools": 3 };
-const PROJECT_BY_ID: Record<string, number> = { "projects/truthlens": 0, "projects/tracker": 1, "projects/travel": 2 };
+const SKILL_BY_ID: Record<string, number> = { "skills/ai": 0, "skills/ml": 1, "skills/web": 2, "skills/automation": 3, "skills/tools": 4 };
+const PROJECT_BY_ID: Record<string, number> = { "projects/cryptoinsight": 0, "projects/policy": 1, "projects/finwise": 2, "projects/truthlens": 3, "projects/support": 4, "projects/travel": 5, "projects/tracker": 6 };
 
 function useReveal(view: "terminal" | "simple") {
   // Re-runs on every view change: when Terminal View is remounted after
@@ -174,7 +179,7 @@ function SimpleView({ onSwitchToTerminal }: { onSwitchToTerminal: () => void }) 
       <section className="pt-10 sm:pt-14">
         <p className="text-sm font-semibold text-[#4ade80]">
           <span className="pulse-dot mr-2 inline-block h-2 w-2 rounded-full bg-[#4ade80]" />
-          Available for work — junior AI / ML roles
+          Available for work — AI Engineer internship / junior role
         </p>
         <h1 className="mt-5 text-4xl font-bold leading-tight tracking-tight text-[#f2f7f2] sm:text-6xl">
           Muhammad Ali Waqas
@@ -203,9 +208,9 @@ function SimpleView({ onSwitchToTerminal }: { onSwitchToTerminal: () => void }) 
         </div>
         <div className="mt-8 grid grid-cols-3 gap-3 sm:gap-4">
           {[
+            { value: "3", label: "RAG apps built — CryptoInsight, University Policy Q&A, SupportPearlz" },
+            { value: "827+", label: "News articles embedded for CryptoInsight" },
             { value: "98.7%", label: "TruthLens accuracy — correct on 98.7 out of every 100 news articles tested" },
-            { value: "7,765", label: "News articles used to test TruthLens" },
-            { value: "3", label: "Projects built and shared" },
           ].map((s) => (
             <div key={s.label} className="rounded-xl border border-[#1d2b1d] bg-[#0a0f0a] px-4 py-4">
               <p className="text-2xl font-bold text-[#4ade80] sm:text-3xl">{s.value}</p>
@@ -218,17 +223,24 @@ function SimpleView({ onSwitchToTerminal }: { onSwitchToTerminal: () => void }) 
       <section className="pt-16">
         <h2 className="text-3xl font-bold text-[#f2f7f2]">About Me</h2>
         <p className="mt-4 max-w-2xl text-base leading-relaxed text-[#c4d4c4]">
-          I am an AI Engineer from Lahore, Pakistan. I build machine-learning products that people
-          can actually use — from checking whether news is real or fake, to full websites and apps.
+          I am an AI Engineer from Lahore, Pakistan. My main work is building AI apps that answer
+          from real documents — RAG systems, LLM backends, and voice AI. TruthLens is my one
+          traditional machine-learning project; most of my work is with large language models,
+          retrieval, and backends.
         </p>
         <p className="mt-3 max-w-2xl text-base leading-relaxed text-[#c4d4c4]">
-          I learn by building things end to end: I prepare the data, train the model, test it
-          honestly on new data, and then turn it into an app anyone can try.
+          I learn by building things end to end: I prepare the data, connect retrieval to a
+          language model, test the answers honestly, and then turn it into an app anyone can try.
+        </p>
+        <p className="mt-3 max-w-2xl text-base leading-relaxed text-[#c4d4c4]">
+          {PROFILE.education}. {PROFILE.certification}.
         </p>
         <ul className="mt-5 max-w-2xl space-y-2 text-base leading-relaxed text-[#c4d4c4]">
-          <li>• I train and test machine-learning models with Python, Scikit-learn, Pandas, and NLTK.</li>
-          <li>• I turn models into apps people can use, with Streamlit, React, and Next.js.</li>
-          <li>• I build full websites and apps with Node.js, Express, and SQLite — including logins, file uploads, and reminders.</li>
+          <li>• I build RAG apps with LangChain, Gemini, and Groq — answers grounded in retrieved documents, not made up.</li>
+          <li>• I build AI backends with Python and Flask, including REST API endpoints and vector search.</li>
+          <li>• I am learning classic machine learning with Scikit-learn and PyTorch — algorithms, training, and evaluation.</li>
+          <li>• I have worked with n8n and CrewAI for automation and agents.</li>
+          <li>• I turn AI into apps people can use, with Streamlit, React, and Next.js.</li>
           <li>• I share my work openly on GitHub, with live demos and Docker images.</li>
         </ul>
       </section>
@@ -236,7 +248,8 @@ function SimpleView({ onSwitchToTerminal }: { onSwitchToTerminal: () => void }) 
       <section id="simple-projects" className="scroll-mt-24 pt-16">
         <h2 className="text-3xl font-bold text-[#f2f7f2]">My Projects</h2>
         <p className="mt-3 max-w-2xl text-base leading-relaxed text-[#9fb49f]">
-          Three projects I built, tested, and shared. Each one taught me a different skill.
+          Seven projects I built, tested, and shared. RAG and AI backends first — my one classic
+          machine-learning project is in there too.
         </p>
         <div className="mt-8 space-y-6">
           {PROJECTS.map((p) => (
@@ -347,7 +360,7 @@ function SimpleView({ onSwitchToTerminal }: { onSwitchToTerminal: () => void }) 
         <div className="rounded-xl border border-[#4ade80]/30 bg-[#0a0f0a] p-6 sm:p-8">
           <h2 className="text-3xl font-bold text-[#f2f7f2]">Contact Me</h2>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-[#9fb49f]">
-            I would love to hear about junior AI Engineer or ML roles, internships, or freelance
+            I would love to hear about an AI Engineer internship or junior role, or freelance
             projects. Email is the fastest way to reach me — GitHub is second.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
@@ -365,6 +378,14 @@ function SimpleView({ onSwitchToTerminal }: { onSwitchToTerminal: () => void }) 
             >
               GitHub — @{PROFILE.githubUsername}
             </a>
+            <a
+              href={PROFILE.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-md border border-[#1d2b1d] px-5 py-2.5 text-[#d6e2d6] transition hover:-translate-y-0.5 hover:border-[#4ade80]/50 hover:text-[#4ade80]"
+            >
+              LinkedIn
+            </a>
           </div>
           <p className="mt-5 text-base text-[#9fb49f]">Based in {PROFILE.location}.</p>
           <p className="mt-1 text-sm text-[#8a9a8a]">
@@ -380,7 +401,7 @@ export default function Home() {
   const [view, setView] = useState<"terminal" | "simple">("terminal");
   // Must run after `view` exists: re-observes .reveal elements on each toggle.
   useReveal(view);
-  const [selected, setSelected] = useState<NodeId>("projects/truthlens");
+  const [selected, setSelected] = useState<NodeId>("projects/cryptoinsight");
   const [openFolders, setOpenFolders] = useState<Set<string>>(new Set(["projects", "skills"]));
   const [query, setQuery] = useState("");
   const detailRef = useRef<HTMLDivElement>(null);
@@ -482,7 +503,7 @@ export default function Home() {
         <section className="pt-10 sm:pt-14">
           <p className="reveal font-mono text-xs text-[#4ade80]">
             <span className="pulse-dot mr-2 inline-block h-2 w-2 rounded-full bg-[#4ade80]" />
-            available for work — junior AI / ML roles
+            available for work — AI Engineer internship / junior role
           </p>
           <h1 className="reveal mt-5 text-4xl font-bold leading-[1.02] tracking-tight text-[#f2f7f2] sm:text-6xl">
             Muhammad Ali Waqas
@@ -491,7 +512,7 @@ export default function Home() {
             </span>
           </h1>
           <p className="reveal mt-5 max-w-2xl text-base leading-relaxed text-[#9fb49f] sm:text-lg">
-            {PROFILE.tagline} I learn by shipping — data, model, app, deployment — and I measure the
+            {PROFILE.tagline} I learn by shipping — data, retrieval, app, deployment — and I measure the
             result honestly, in public.
           </p>
           <p className="reveal mt-3 font-mono text-xs text-[#8a9a8a]">
@@ -522,9 +543,9 @@ export default function Home() {
           {/* Stats as terminal output, not gradient cards */}
           <div className="reveal mt-6 grid grid-cols-3 gap-3 font-mono text-sm sm:gap-4">
             {[
+              { value: "3", label: "RAG apps shipped" },
+              { value: "827+", label: "articles embedded (CryptoInsight)" },
               { value: "98.7%", label: "TruthLens accuracy" },
-              { value: "7,765", label: "unseen articles tested" },
-              { value: "3", label: "shipped projects" },
             ].map((s) => (
               <div key={s.label} className="rounded-lg border border-[#1d2b1d] bg-[#0a0f0a] px-3 py-3 sm:px-4">
                 <p className="text-lg font-bold text-[#4ade80] sm:text-2xl">{s.value}</p>
@@ -533,7 +554,7 @@ export default function Home() {
             ))}
           </div>
           <p className="reveal mt-4 font-mono text-xs text-[#5b6b5b]">
-            # every number above is measured on real, unseen data — not a self-rating.
+            # the 98.7% is measured on real, unseen articles — the rest are counts from my own projects, not self-ratings.
           </p>
         </section>
 
@@ -618,7 +639,7 @@ export default function Home() {
                   id="project-search"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder="truthlens, python, react…"
+                  placeholder="cryptoinsight, rag, gemini…"
                   autoComplete="off"
                   className="mt-1.5 w-full rounded-md border border-[#1d2b1d] bg-[#080d08] px-3 py-2 font-mono text-xs text-[#e8f5e8] outline-none placeholder:text-[#5b6b5b] focus:border-[#4ade80]/60"
                 />
@@ -639,15 +660,21 @@ export default function Home() {
                   <div>
                     <h3 className="text-xl font-bold text-[#f2f7f2]">An engineer who learns by shipping</h3>
                     <p className="mt-3 text-sm leading-relaxed text-[#9fb49f]">
-                      I am an AI Engineer focused on machine learning and practical products. I learn by
-                      building end to end: data, model, app, deployment — and measuring the result honestly.
+                      I am an AI Engineer focused on RAG and LLM backends. I learn by building end
+                      to end: data, retrieval, app, deployment — and measuring the result honestly.
+                      TruthLens is my one traditional machine-learning project.
                     </p>
                     <ul className="mt-4 space-y-2 text-sm leading-relaxed text-[#9fb49f]">
-                      <li><span className="font-mono text-[#4ade80]">&gt;</span> Train and evaluate ML models with Scikit-learn, Pandas, and NLTK.</li>
-                      <li><span className="font-mono text-[#4ade80]">&gt;</span> Turn models into usable apps with Streamlit, React, and Next.js.</li>
-                      <li><span className="font-mono text-[#4ade80]">&gt;</span> Build full-stack apps with Node.js, Express, and SQLite — auth, file uploads, reminders.</li>
+                      <li><span className="font-mono text-[#4ade80]">&gt;</span> Build RAG apps with LangChain, Gemini, and Groq — answers grounded in retrieved documents.</li>
+                      <li><span className="font-mono text-[#4ade80]">&gt;</span> Build AI backends with Python and Flask — REST APIs, embeddings, vector search.</li>
+                      <li><span className="font-mono text-[#4ade80]">&gt;</span> Learning classic ML with Scikit-learn and PyTorch — algorithms, training, evaluation.</li>
+                      <li><span className="font-mono text-[#4ade80]">&gt;</span> Worked with n8n and CrewAI for automation and agents.</li>
+                      <li><span className="font-mono text-[#4ade80]">&gt;</span> Turn AI into usable apps with Streamlit, React, and Next.js.</li>
                       <li><span className="font-mono text-[#4ade80]">&gt;</span> Ship with Git, GitHub, and Docker. A live demo, not just code.</li>
                     </ul>
+                    <p className="mt-4 text-sm leading-relaxed text-[#9fb49f]">
+                      {PROFILE.education}. {PROFILE.certification}.
+                    </p>
                     <p className="mt-4 text-sm leading-relaxed text-[#9fb49f]">
                       I built these projects while learning under my instructor,{" "}
                       <strong className="text-[#e8f5e8]">{PROFILE.instructor}</strong> — each one taught a
@@ -729,7 +756,7 @@ export default function Home() {
                   <div>
                     <h3 className="text-xl font-bold text-[#f2f7f2]">contact.md</h3>
                     <p className="mt-3 text-sm leading-relaxed text-[#9fb49f]">
-                      Looking for a junior AI / ML role, an internship, or a freelance project? The
+                      Looking for an AI Engineer internship or junior role, or a freelance project? The
                       fastest way to reach me is email or GitHub.
                     </p>
                     <dl className="mt-4 space-y-2 font-mono text-sm">
@@ -749,7 +776,7 @@ export default function Home() {
             <span className="text-[#4ade80]">$ grep -i &quot;{query || "…"}&quot; projects/</span>
             <span className="ml-3">
               {filteredProjects.length === 0
-                ? "no matches — try python, react, voice, or fake-news"
+                ? "no matches — try rag, gemini, flask, or finance"
                 : filteredProjects.map((p) => p.name).join("  ·  ")}
             </span>
           </div>
@@ -790,9 +817,9 @@ export default function Home() {
         <section id="contact" className="reveal scroll-mt-24 pt-16 pb-16">
           <div className="rounded-xl border border-[#4ade80]/30 bg-[#0a0f0a] p-6 sm:p-8">
             <p className="font-mono text-xs text-[#4ade80]">$ ./hire-me --role &quot;AI Engineer&quot;</p>
-            <h2 className="mt-3 text-2xl font-bold text-[#f2f7f2] sm:text-3xl">Let&apos;s talk about an AI / ML role</h2>
+            <h2 className="mt-3 text-2xl font-bold text-[#f2f7f2] sm:text-3xl">Let&apos;s talk about an AI Engineer role</h2>
             <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#9fb49f]">
-              I would love to hear about junior AI Engineer or ML roles, internships, or freelance
+              I would love to hear about an AI Engineer internship or junior role, or freelance
               projects. Email is fastest — GitHub is second.
             </p>
             <div className="mt-6 flex flex-wrap gap-3 font-mono text-sm">
@@ -802,14 +829,10 @@ export default function Home() {
               <a href={PROFILE.github} target="_blank" rel="noopener noreferrer" className="rounded-md border border-[#1d2b1d] px-5 py-2.5 text-[#d6e2d6] transition hover:-translate-y-0.5 hover:border-[#4ade80]/50 hover:text-[#4ade80]">
                 github — @{PROFILE.githubUsername} ↗
               </a>
-              {PROFILE.linkedinIsPlaceholder ? (
-                <span className="rounded-md border border-dashed border-[#1d2b1d] px-5 py-2.5 text-[#8a9a8a]">LinkedIn — link coming soon</span>
-              ) : (
-                <a href={PROFILE.linkedin} target="_blank" rel="noopener noreferrer" className="rounded-md border border-[#1d2b1d] px-5 py-2.5 text-[#d6e2d6] transition hover:-translate-y-0.5 hover:border-[#4ade80]/50 hover:text-[#4ade80]">LinkedIn ↗</a>
-              )}
+              <a href={PROFILE.linkedin} target="_blank" rel="noopener noreferrer" className="rounded-md border border-[#1d2b1d] px-5 py-2.5 text-[#d6e2d6] transition hover:-translate-y-0.5 hover:border-[#4ade80]/50 hover:text-[#4ade80]">LinkedIn ↗</a>
             </div>
             <p className="mt-5 font-mono text-xs text-[#5b6b5b]">
-              # to update LinkedIn / photo, edit src/data/portfolio.ts — search for TODO.
+              # photo: add public/photo.jpg and set photoPath in src/data/portfolio.ts.
             </p>
           </div>
         </section>

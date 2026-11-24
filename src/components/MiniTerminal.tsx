@@ -10,7 +10,7 @@ const HELP_LINES = [
   "  whoami       — who is Muhammad Ali Waqas",
   "  ls           — list the folders in ~/",
   "  projects     — list shipped projects",
-  "  cat <name>   — open a project (truthlens, tracker, travel)",
+  "  cat <name>   — open a project (cryptoinsight, policy, finwise, truthlens, support, travel, tracker)",
   "  skills       — list tools, grouped",
   "  contact      — email, GitHub, location",
   "  help         — this list",
@@ -19,9 +19,13 @@ const HELP_LINES = [
 
 function projectByToken(token: string) {
   const t = token.toLowerCase();
-  if (t.startsWith("truth")) return PROJECTS[0];
-  if (t.startsWith("track") || t.startsWith("job")) return PROJECTS[1];
-  if (t.startsWith("travel") || t.startsWith("gemini")) return PROJECTS[2];
+  if (t.startsWith("crypto")) return PROJECTS[0];
+  if (t.startsWith("polic") || t.startsWith("uni")) return PROJECTS[1];
+  if (t.startsWith("finwise") || t.startsWith("fin")) return PROJECTS[2];
+  if (t.startsWith("truth")) return PROJECTS[3];
+  if (t.startsWith("support") || t.startsWith("pearl")) return PROJECTS[4];
+  if (t.startsWith("travel") || t.startsWith("gemini")) return PROJECTS[5];
+  if (t.startsWith("track") || t.startsWith("job")) return PROJECTS[6];
   return PROJECTS.find((p) => p.name.toLowerCase().includes(t));
 }
 
@@ -48,17 +52,17 @@ export default function MiniTerminal() {
       HELP_LINES.forEach((l) => push(l));
     } else if (lower === "whoami") {
       push(`${PROFILE.name} — ${PROFILE.title}`);
-      push(`based in ${PROFILE.location} · builds ML products people can use`);
+      push(`based in ${PROFILE.location} · builds RAG and LLM apps that answer from real documents`);
       push(`instructor: ${PROFILE.instructor}`);
     } else if (lower === "ls") {
       push("about.md  projects/  skills/  journey/  contact.md");
     } else if (lower === "projects") {
       PROJECTS.forEach((p) => push(`- ${p.name} — ${p.category}`));
-      push("tip: cat truthlens  (or tracker / travel)");
+      push("tip: cat cryptoinsight  (or policy / finwise / truthlens)");
     } else if (lower === "cat") {
       const p = arg ? projectByToken(arg) : undefined;
       if (!p) {
-        push(`cat: ${arg || "(no file)"}: no such project — try truthlens, tracker, or travel`, "err");
+        push(`cat: ${arg || "(no file)"}: no such project — try cryptoinsight, policy, finwise, or truthlens`, "err");
       } else {
         push(`$ cat projects/${p.name.toLowerCase().replace(/\s+/g, "-")}.md`);
         push(p.description);
