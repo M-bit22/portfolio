@@ -207,3 +207,145 @@ export const JOURNEY = [
       "Open to AI Engineer internships and junior roles where I can keep building RAG and LLM backends, learning, and shipping real products.",
   },
 ];
+
+/* ------------------------------------------------------------------ */
+/* Real or Fake? quiz — sample headlines, NOT the live model.         */
+/*                                                                     */
+/* Honesty rule: only two items were ever scored by the real          */
+/* TruthLens model, in the live demo tests on 2026-11-22: a Federal   */
+/* Reserve sample (Likely real, 100%) and a miracle-cure sample      */
+/* (Likely fake, 100%). Their headlines below are paraphrases of     */
+/* those tested samples. The other three are clearly-labelled sample  */
+/* headlines with a known real/fake label — they were NOT scored by   */
+/* the model, and no per-headline confidence score is shown for them. */
+/* TruthLens's real measured result (98.7% on 7,765 unseen articles)  */
+/* is shown as a separate stat, never as a per-headline score.        */
+/* ------------------------------------------------------------------ */
+
+export type QuizQuestion = {
+  headline: string;
+  answer: "real" | "fake";
+  source: "verified-demo" | "sample";
+  explanation: string;
+};
+
+export const QUIZ_QUESTIONS: QuizQuestion[] = [
+  {
+    headline: "Federal Reserve raises interest rates to fight rising inflation",
+    answer: "real",
+    source: "verified-demo",
+    explanation:
+      "Based on the Federal Reserve sample tested in the live TruthLens demo on 2026-11-22 — TruthLens said Likely real, 100%.",
+  },
+  {
+    headline: "Miracle cure found: one simple drink cures every disease, doctors are stunned",
+    answer: "fake",
+    source: "verified-demo",
+    explanation:
+      "Based on the miracle-cure sample tested in the live TruthLens demo on 2026-11-22 — TruthLens said Likely fake, 100%.",
+  },
+  {
+    headline: "City council approves funding to repair roads across Lahore",
+    answer: "real",
+    source: "sample",
+    explanation:
+      "Sample headline with a known label — a plain official announcement, the kind of thing real news looks like. Not scored by the live model.",
+  },
+  {
+    headline: "Celebrity weight-loss tea burns fat overnight — lose 10 kg in a week, no diet needed!",
+    answer: "fake",
+    source: "sample",
+    explanation:
+      "Sample headline with a known label — a too-good-to-be-true health claim with no evidence. Not scored by the live model.",
+  },
+  {
+    headline: "Local university opens a new library for students next month",
+    answer: "real",
+    source: "sample",
+    explanation:
+      "Sample headline with a known label — a normal, checkable local announcement. Not scored by the live model.",
+  },
+];
+
+/* ------------------------------------------------------------------ */
+/* RAG playground — a demo walkthrough of how the RAG apps work.      */
+/* NOT a live RAG system: no real retrieval or model runs in the      */
+/* browser. Document titles shown are illustrative examples of the    */
+/* kind of documents the real systems search; only relative ranking   */
+/* (1st, 2nd, 3rd match) is shown, never invented retrieval scores.   */
+/* Real numbers used: CryptoInsight 827+ articles, 3,072-dim Gemini   */
+/* embeddings, MongoDB Atlas Vector Search, cosine similarity;         */
+/* University Policy Q&A page-level citations.                        */
+/* ------------------------------------------------------------------ */
+
+export type RagStep = {
+  title: string;
+  plain: string;
+  detail: string;
+};
+
+export const RAG_STEPS: RagStep[] = [
+  {
+    title: "1 · Ask a question",
+    plain: "You ask a question in plain words.",
+    detail: "No keywords needed — just ask it like you would ask a person.",
+  },
+  {
+    title: "2 · Turn it into an embedding",
+    plain: "The question becomes a list of 3,072 numbers.",
+    detail: "That list is a Gemini embedding — it captures what the question means, not just the words in it.",
+  },
+  {
+    title: "3 · Search the vector store",
+    plain: "Those numbers are compared with every document's numbers.",
+    detail: "CryptoInsight compares against 827+ news articles in a MongoDB Atlas Vector Search index, using cosine similarity.",
+  },
+  {
+    title: "4 · Retrieve the top matches",
+    plain: "The closest documents win — 1st, 2nd, 3rd.",
+    detail: "Only the most similar documents are kept. Anything far away is ignored, so the answer stays grounded.",
+  },
+  {
+    title: "5 · Write a grounded answer",
+    plain: "The language model answers using only those documents.",
+    detail: "The answer cites its sources — page numbers for the policy app, article titles for CryptoInsight. If the documents don't say it, the answer says so.",
+  },
+];
+
+export type RagSample = {
+  id: string;
+  label: string;
+  question: string;
+  project: string;
+  matches: { rank: string; title: string; note: string }[];
+  answer: string;
+};
+
+export const RAG_SAMPLES: RagSample[] = [
+  {
+    id: "crypto",
+    label: "Crypto question",
+    question: "What are analysts saying about Bitcoin this week?",
+    project: "CryptoInsight — 827+ news articles",
+    matches: [
+      { rank: "1st match", title: "Bitcoin weekly market roundup", note: "Example article title" },
+      { rank: "2nd match", title: "Crypto prices react to interest-rate news", note: "Example article title" },
+      { rank: "3rd match", title: "Analysts discuss the Bitcoin outlook", note: "Example article title" },
+    ],
+    answer:
+      "Example answer: analysts are mixed — some point to the interest-rate news, others to the weekly price trend. (Demo walkthrough, not a live answer.)",
+  },
+  {
+    id: "policy",
+    label: "University policy question",
+    question: "How many days of leave can a student take?",
+    project: "University Policy Q&A — rulebook PDFs",
+    matches: [
+      { rank: "1st match", title: "University rulebook — leave policy", note: "Page 12 (example)" },
+      { rank: "2nd match", title: "University rulebook — attendance rules", note: "Page 8 (example)" },
+      { rank: "3rd match", title: "University rulebook — semester rules", note: "Page 21 (example)" },
+    ],
+    answer:
+      "Example answer: the leave policy on page 12 of the rulebook sets the limit — the real app quotes the exact page. (Demo walkthrough, not a live answer.)",
+  },
+];

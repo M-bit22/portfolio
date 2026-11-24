@@ -15,6 +15,7 @@ const HELP_LINES = [
   "  contact      — email, GitHub, location",
   "  help         — this list",
   "  clear        — clear the terminal",
+  "fun ones — try: sudo hire-me, coffee, joke, matrix, neofetch",
 ];
 
 function projectByToken(token: string) {
@@ -82,6 +83,31 @@ export default function MiniTerminal() {
       setLines([]);
       setValue("");
       return;
+    } else if (lower === "sudo" && arg === "hire-me") {
+      push("Password: ********");
+      push("Permission granted. Excellent decision.");
+      push(`Email ${PROFILE.email} — subject: "You're hired".`);
+      push("Muhammad is available for an AI Engineer internship / junior role.");
+    } else if (lower === "coffee") {
+      push("Brewing coffee… ☕");
+      push("Coffee ready. All bugs are now features. (Kidding — the code is tested.)");
+    } else if (lower === "joke") {
+      push("Why do programmers prefer dark mode?");
+      push("Because light attracts bugs.");
+    } else if (lower === "matrix") {
+      push("Wake up, Neo… the Matrix has you.");
+      push("…or just this portfolio. Follow the green rabbit — try `sudo hire-me`.");
+    } else if (lower === "neofetch") {
+      push("muhammad@portfolio");
+      push("─────────────────");
+      push("OS: Next.js 16 · React 19");
+      push("Shell: zsh (this page)");
+      push("Role: AI Engineer");
+      push("Focus: RAG · LLM backends · voice AI");
+      push("Location: Lahore, Pakistan");
+      push("Uptime: shipping since the first project");
+    } else if (lower === "rm" && arg.startsWith("-rf")) {
+      push("Nice try. This portfolio is backed up on GitHub — and so is Muhammad's work ethic.", "err");
     } else if (lower === "open" && arg) {
       const p = projectByToken(arg);
       if (p?.live) {
@@ -157,7 +183,7 @@ export default function MiniTerminal() {
       </div>
 
       <div className="flex flex-wrap gap-2 border-t border-[#1d2b1d] px-4 py-3">
-        {["help", "whoami", "projects", "skills", "contact"].map((c) => (
+        {["help", "whoami", "projects", "skills", "contact", "coffee", "sudo hire-me"].map((c) => (
           <button
             key={c}
             type="button"

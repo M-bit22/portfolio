@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import MiniTerminal from "@/components/MiniTerminal";
+import QuizGame from "@/components/QuizGame";
+import RagPlayground from "@/components/RagPlayground";
 import { JOURNEY, PROFILE, PROJECTS, SKILLS } from "@/data/portfolio";
 
 /* ------------------------------------------------------------------ */
@@ -340,6 +342,18 @@ function SimpleView({ onSwitchToTerminal }: { onSwitchToTerminal: () => void }) 
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      <section className="pt-16">
+        <h2 className="text-3xl font-bold text-[#f2f7f2]">Try It Yourself</h2>
+        <p className="mt-3 max-w-2xl text-base leading-relaxed text-[#9fb49f]">
+          Two fun ways to see what I build — a quiz based on TruthLens, and a step-by-step look
+          at how my RAG apps work.
+        </p>
+        <div className="mt-8 space-y-6">
+          <QuizGame variant="simple" />
+          <RagPlayground variant="simple" />
         </div>
       </section>
 
@@ -810,6 +824,24 @@ export default function Home() {
           </p>
           <div className="mt-6">
             <MiniTerminal />
+          </div>
+        </section>
+
+        {/* Fun + interactive: Real or Fake quiz and RAG playground */}
+        <section id="play" className="reveal scroll-mt-24 pt-16">
+          <p className="font-mono text-xs text-[#4ade80]">~/play</p>
+          <h2 className="mt-2 text-2xl font-bold text-[#f2f7f2] sm:text-3xl">Try it yourself</h2>
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[#9fb49f]">
+            Two fun ways to see what I build — a quiz based on TruthLens, and a step-by-step look
+            at how my RAG apps work. Psst: the terminal above has secrets too — try{" "}
+            <code className="font-mono text-[#4ade80]">coffee</code>,{" "}
+            <code className="font-mono text-[#4ade80]">joke</code>,{" "}
+            <code className="font-mono text-[#4ade80]">matrix</code> or{" "}
+            <code className="font-mono text-[#4ade80]">sudo hire-me</code>.
+          </p>
+          <div className="mt-6 space-y-6">
+            <QuizGame variant="terminal" />
+            <RagPlayground variant="terminal" />
           </div>
         </section>
 

@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Muhammad Ali Waqas — AI Engineer",
   description:
-    "Portfolio of Muhammad Ali Waqas, an AI Engineer from Lahore, Pakistan. RAG and LLM backend work first: CryptoInsight (RAG over 827+ articles), University Policy Q&A, FinWise AI, SupportPearlz — plus TruthLens fake-news detection (98.7% accuracy), his one classic ML project. Browse it like a terminal, or switch to the Simple View.",
+    "Portfolio of Muhammad Ali Waqas, an AI Engineer from Lahore, Pakistan. RAG and LLM backend work first: CryptoInsight (RAG over 827+ articles), University Policy Q&A, FinWise AI, SupportPearlz — plus TruthLens fake-news detection (98.7% accuracy), his one classic ML project. Browse it like a terminal, or switch to the Simple View. Play the Real or Fake quiz and watch how RAG works, step by step.",
   openGraph: {
     title: "Muhammad Ali Waqas — AI Engineer",
     description:
