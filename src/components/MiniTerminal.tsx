@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { PROFILE, PROJECTS, SKILLS } from "@/data/portfolio";
 
 type Line = { kind: "cmd" | "out" | "err"; text: string };
@@ -37,6 +37,32 @@ export default function MiniTerminal() {
   ]);
   const [value, setValue] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Auto-focus the input when the terminal scrolls into view on
+  // non-touch devices, so the viewer can type straight away. The
+  // block cursor blinks regardless of focus; on touch devices we
+  // skip auto-focus so the on-screen keyboard does not pop open
+  // uninvited — tapping the terminal still focuses it.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const isTouch =
+      window.matchMedia("(pointer: coarse)").matches ||
+      "ontouchstart" in window;
+    if (isTouch) return;
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          inputRef.current?.focus({ preventScroll: true });
+        }
+      },
+      { threshold: 0.35 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   function run(raw: string) {
     const cmd = raw.trim();
@@ -130,6 +156,7 @@ export default function MiniTerminal() {
 
   return (
     <div
+      ref={containerRef}
       className="overflow-hidden rounded-xl border border-[#1d2b1d] bg-[#080d08] text-left shadow-[0_0_0_1px_rgba(74,222,128,0.05),0_18px_50px_rgba(0,0,0,0.45)]"
       onClick={() => inputRef.current?.focus()}
     >
@@ -166,18 +193,35 @@ export default function MiniTerminal() {
           <label htmlFor="mini-terminal-input" className="shrink-0 text-[#4ade80]">
             muhammad@portfolio:~$
           </label>
-          <input
-            id="mini-terminal-input"
-            ref={inputRef}
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            autoComplete="off"
-            autoCapitalize="off"
-            autoCorrect="off"
-            spellCheck={false}
-            placeholder="type a command…"
-            className="min-w-0 flex-1 bg-transparent font-mono text-[13px] caret-[#4ade80] text-[#e8f5e8] outline-none placeholder:text-[#5b6b5b]"
-          />
+          {/*
+            The visible line is a mirror of the real input: typed text,
+            then a thick green block cursor, then the grey placeholder
+            (only when empty, so the block sits right after the prompt).
+            The real <input> is transparent and overlays the mirror, so
+            it captures keystrokes and its native caret is hidden —
+            there is exactly one cursor, and it always sits immediately
+            after the typed text, never at the far right end of the line.
+            The block blinks via CSS whether or not the input is focused.
+          */}
+          <div className="relative min-w-0 flex-1 overflow-hidden">
+            <input
+              id="mini-terminal-input"
+              ref={inputRef}
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+              autoComplete="off"
+              autoCapitalize="off"
+              autoCorrect="off"
+              spellCheck={false}
+              aria-label="Terminal command input"
+              className="absolute inset-0 h-full w-full bg-transparent font-mono text-[13px] text-transparent caret-transparent outline-none selection:bg-transparent selection:text-transparent"
+            />
+            <div aria-hidden="true" className="pointer-events-none flex items-center font-mono text-[13px] leading-relaxed">
+              <span className="whitespace-pre text-[#e8f5e8]">{value}</span>
+              <span className="cursor-block inline-block h-[1.15em] w-[0.6em] shrink-0 bg-[#4ade80]" />
+              {!value && <span className="pl-1 text-[#5b6b5b]">type a command…</span>}
+            </div>
+          </div>
         </form>
       </div>
 
