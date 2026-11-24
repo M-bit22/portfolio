@@ -32,6 +32,7 @@ export type Project = {
   name: string;
   category: string;
   description: string;
+  plainSummary: string;
   results: string[];
   stack: string[];
   github?: string;
@@ -45,6 +46,7 @@ export const PROJECTS: Project[] = [
     category: "Fake News Detection · NLP / ML",
     description:
       "A Streamlit app that classifies news text as real or fake, with a confidence score. Trained on 2015–2018 news and tested on 7,765 unseen articles.",
+    plainSummary: "Checks if a news story is real or fake. It was correct 98.7% of the time on 7,765 news articles.",
     results: [
       "98.7% accuracy on 7,765 unseen articles",
       "Logistic Regression 98.7% · Naive Bayes 94.3% · Passive Aggressive 98.9%",
@@ -60,6 +62,7 @@ export const PROJECTS: Project[] = [
     category: "Full-Stack Web App",
     description:
       "A complete tracker for job hunting: save applications, follow their status, get reminders, and upload documents — so nothing falls through the cracks.",
+    plainSummary: "Keeps track of every job you apply for — what stage it is at, when to follow up, and what documents you sent.",
     results: [
       "Application CRUD with Applied / Screening / Interview / Offer / Rejected",
       "Dashboard stats, success rate, search and filters",
@@ -73,6 +76,7 @@ export const PROJECTS: Project[] = [
     category: "Voice AI · Travel Q&A",
     description:
       "A voice-in, voice-out travel advisor. Ask a travel question by voice, get a text answer plus a spoken reply, powered by Gemini.",
+    plainSummary: "Ask a travel question by speaking, and get a spoken answer back. No typing needed.",
     results: [
       "Voice recording input — no typing needed",
       "Spoken audio answers (TTS)",

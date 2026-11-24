@@ -136,8 +136,237 @@ function useReveal() {
   }, []);
 }
 
+
+/* ------------------------------------------------------------------ */
+/* Simple View — a normal, easy-to-read version for non-technical      */
+/* visitors. No terminal words, no file names, no commands. Same data. */
+/* ------------------------------------------------------------------ */
+
+function SimpleView({ onSwitchToTerminal }: { onSwitchToTerminal: () => void }) {
+  return (
+    <div>
+      <div className="mt-6 flex flex-col gap-3 rounded-xl border border-[#1d2b1d] bg-[#0a0f0a] px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-sm leading-relaxed text-[#9fb49f]">
+          You are viewing the <strong className="text-[#f2f7f2]">Simple View</strong> — the
+          easy-to-read version of this site.
+        </p>
+        <button
+          type="button"
+          onClick={onSwitchToTerminal}
+          className="shrink-0 rounded-md border border-[#4ade80]/40 px-4 py-2 text-sm font-semibold text-[#4ade80] transition hover:-translate-y-0.5 hover:bg-[#4ade80] hover:text-[#04140a] focus-visible:outline-2 focus-visible:outline-[#4ade80]"
+        >
+          Switch to Terminal View
+        </button>
+      </div>
+
+      <section className="pt-10 sm:pt-14">
+        <p className="text-sm font-semibold text-[#4ade80]">
+          <span className="pulse-dot mr-2 inline-block h-2 w-2 rounded-full bg-[#4ade80]" />
+          Available for work — junior AI / ML roles
+        </p>
+        <h1 className="mt-5 text-4xl font-bold leading-tight tracking-tight text-[#f2f7f2] sm:text-6xl">
+          Muhammad Ali Waqas
+        </h1>
+        <p className="mt-2 text-2xl font-semibold text-[#4ade80] sm:text-3xl">AI Engineer</p>
+        <p className="mt-5 max-w-2xl text-lg leading-relaxed text-[#c4d4c4]">
+          {PROFILE.tagline} I learn by shipping — data, model, app, deployment — and I measure the
+          result honestly, in public.
+        </p>
+        <p className="mt-3 text-sm text-[#8a9a8a]">
+          Built while learning under instructor {PROFILE.instructor}.
+        </p>
+        <div className="mt-6 flex flex-wrap gap-3">
+          <a
+            href="#simple-projects"
+            className="rounded-md bg-[#4ade80] px-5 py-2.5 font-semibold text-[#04140a] transition hover:-translate-y-0.5 hover:bg-[#86efac] focus-visible:outline-2 focus-visible:outline-[#4ade80]"
+          >
+            See My Projects
+          </a>
+          <a
+            href="#simple-contact"
+            className="rounded-md border border-[#1d2b1d] bg-[#0d130d] px-5 py-2.5 text-[#d6e2d6] transition hover:-translate-y-0.5 hover:border-[#4ade80]/50 hover:text-[#4ade80]"
+          >
+            Contact Me
+          </a>
+        </div>
+        <div className="mt-8 grid grid-cols-3 gap-3 sm:gap-4">
+          {[
+            { value: "98.7%", label: "TruthLens accuracy — correct on 98.7 out of every 100 news articles tested" },
+            { value: "7,765", label: "News articles used to test TruthLens" },
+            { value: "3", label: "Projects built and shared" },
+          ].map((s) => (
+            <div key={s.label} className="rounded-xl border border-[#1d2b1d] bg-[#0a0f0a] px-4 py-4">
+              <p className="text-2xl font-bold text-[#4ade80] sm:text-3xl">{s.value}</p>
+              <p className="mt-2 text-xs leading-relaxed text-[#9fb49f] sm:text-sm">{s.label}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="pt-16">
+        <h2 className="text-3xl font-bold text-[#f2f7f2]">About Me</h2>
+        <p className="mt-4 max-w-2xl text-base leading-relaxed text-[#c4d4c4]">
+          I am an AI Engineer from Lahore, Pakistan. I build machine-learning products that people
+          can actually use — from checking whether news is real or fake, to full websites and apps.
+        </p>
+        <p className="mt-3 max-w-2xl text-base leading-relaxed text-[#c4d4c4]">
+          I learn by building things end to end: I prepare the data, train the model, test it
+          honestly on new data, and then turn it into an app anyone can try.
+        </p>
+        <ul className="mt-5 max-w-2xl space-y-2 text-base leading-relaxed text-[#c4d4c4]">
+          <li>• I train and test machine-learning models with Python, Scikit-learn, Pandas, and NLTK.</li>
+          <li>• I turn models into apps people can use, with Streamlit, React, and Next.js.</li>
+          <li>• I build full websites and apps with Node.js, Express, and SQLite — including logins, file uploads, and reminders.</li>
+          <li>• I share my work openly on GitHub, with live demos and Docker images.</li>
+        </ul>
+      </section>
+
+      <section id="simple-projects" className="scroll-mt-24 pt-16">
+        <h2 className="text-3xl font-bold text-[#f2f7f2]">My Projects</h2>
+        <p className="mt-3 max-w-2xl text-base leading-relaxed text-[#9fb49f]">
+          Three projects I built, tested, and shared. Each one taught me a different skill.
+        </p>
+        <div className="mt-8 space-y-6">
+          {PROJECTS.map((p) => (
+            <article
+              key={p.name}
+              className="rounded-xl border border-[#1d2b1d] bg-[#0a0f0a] p-6 transition hover:-translate-y-0.5 hover:border-[#4ade80]/40 sm:p-7"
+            >
+              <p className="text-sm font-semibold uppercase tracking-wide text-[#4ade80]">{p.category}</p>
+              <h3 className="mt-2 text-2xl font-bold text-[#f2f7f2]">{p.name}</h3>
+              <p className="mt-3 text-lg leading-relaxed text-[#c4d4c4]">{p.plainSummary}</p>
+              <p className="mt-2 text-base leading-relaxed text-[#9fb49f]">{p.description}</p>
+              <ul className="mt-4 space-y-2">
+                {p.results.map((r) => (
+                  <li key={r} className="flex gap-2 text-base text-[#d6e2d6]">
+                    <span className="text-[#4ade80]">✓</span> {r}
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {p.stack.map((t) => (
+                  <span key={t} className="rounded-md border border-[#1d2b1d] bg-[#0d130d] px-2.5 py-1 text-sm text-[#9fb49f]">
+                    {t}
+                  </span>
+                ))}
+              </div>
+              <div className="mt-6 flex flex-wrap gap-3">
+                {p.live && (
+                  <a
+                    href={p.live}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-md bg-[#4ade80] px-5 py-2.5 font-semibold text-[#04140a] transition hover:-translate-y-0.5 hover:bg-[#86efac] focus-visible:outline-2 focus-visible:outline-[#4ade80]"
+                  >
+                    Live Demo
+                  </a>
+                )}
+                {p.github && (
+                  <a
+                    href={p.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-md border border-[#1d2b1d] bg-[#0d130d] px-5 py-2.5 text-[#d6e2d6] transition hover:-translate-y-0.5 hover:border-[#4ade80]/50 hover:text-[#4ade80]"
+                  >
+                    GitHub
+                  </a>
+                )}
+                {p.extra?.map((l) => (
+                  <a
+                    key={l.label}
+                    href={l.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-md border border-[#1d2b1d] bg-[#0d130d] px-5 py-2.5 text-[#d6e2d6] transition hover:-translate-y-0.5 hover:border-[#4ade80]/50 hover:text-[#4ade80]"
+                  >
+                    {l.label}
+                  </a>
+                ))}
+              </div>
+              {p.name === "TruthLens" && (
+                <p className="mt-5 rounded-lg border border-[#1d2b1d] bg-[#080d08] px-4 py-3 text-sm leading-relaxed text-[#8a9a8a]">
+                  Please note: the live demo has been unreliable at times. The numbers above come
+                  from testing on real news articles, not from the demo.
+                </p>
+              )}
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="pt-16">
+        <h2 className="text-3xl font-bold text-[#f2f7f2]">My Skills</h2>
+        <p className="mt-3 max-w-2xl text-base leading-relaxed text-[#9fb49f]">
+          Tools I have actually used in the projects above — not just a list.
+        </p>
+        <div className="mt-8 grid gap-4 sm:grid-cols-2">
+          {SKILLS.map((group) => (
+            <div
+              key={group.group}
+              className="rounded-xl border border-[#1d2b1d] bg-[#0a0f0a] p-6 transition hover:-translate-y-0.5 hover:border-[#4ade80]/40"
+            >
+              <h3 className="text-lg font-semibold text-[#4ade80]">{group.group}</h3>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {group.items.map((s) => (
+                  <span key={s} className="rounded-md border border-[#1d2b1d] bg-[#080d08] px-3 py-1.5 text-sm text-[#d6e2d6]">
+                    {s}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="pt-16">
+        <h2 className="text-3xl font-bold text-[#f2f7f2]">How I Got Here</h2>
+        <ol className="mt-8 space-y-6">
+          {JOURNEY.map((step, i) => (
+            <li key={step.title} className="border-l-2 border-[#4ade80]/40 pl-5">
+              <p className="text-sm font-semibold text-[#4ade80]">Step {i + 1}</p>
+              <h3 className="mt-1 text-lg font-semibold text-[#f2f7f2]">{step.title}</h3>
+              <p className="mt-1 max-w-2xl text-base leading-relaxed text-[#9fb49f]">{step.detail}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section id="simple-contact" className="scroll-mt-24 pt-16 pb-16">
+        <div className="rounded-xl border border-[#4ade80]/30 bg-[#0a0f0a] p-6 sm:p-8">
+          <h2 className="text-3xl font-bold text-[#f2f7f2]">Contact Me</h2>
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-[#9fb49f]">
+            I would love to hear about junior AI Engineer or ML roles, internships, or freelance
+            projects. Email is the fastest way to reach me — GitHub is second.
+          </p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <a
+              href={"mailto:" + PROFILE.email}
+              className="rounded-md bg-[#4ade80] px-5 py-2.5 font-semibold text-[#04140a] transition hover:-translate-y-0.5 hover:bg-[#86efac] focus-visible:outline-2 focus-visible:outline-[#4ade80]"
+            >
+              Email Me: {PROFILE.email}
+            </a>
+            <a
+              href={PROFILE.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-md border border-[#1d2b1d] px-5 py-2.5 text-[#d6e2d6] transition hover:-translate-y-0.5 hover:border-[#4ade80]/50 hover:text-[#4ade80]"
+            >
+              GitHub — @{PROFILE.githubUsername}
+            </a>
+          </div>
+          <p className="mt-5 text-base text-[#9fb49f]">Based in {PROFILE.location}.</p>
+          <p className="mt-1 text-sm text-[#8a9a8a]">
+            {PROFILE.linkedinIsPlaceholder ? "LinkedIn — link coming soon" : "LinkedIn: " + PROFILE.linkedin}
+          </p>
+        </div>
+      </section>
+    </div>
+  );
+}
+
 export default function Home() {
   useReveal();
+  const [view, setView] = useState<"terminal" | "simple">("terminal");
   const [selected, setSelected] = useState<NodeId>("projects/truthlens");
   const [openFolders, setOpenFolders] = useState<Set<string>>(new Set(["projects", "skills"]));
   const [query, setQuery] = useState("");
@@ -184,20 +413,32 @@ export default function Home() {
         <div className="mx-auto flex max-w-5xl items-center gap-3 px-4 py-3 sm:px-6">
           <a href="#top" className="flex items-center gap-2.5 font-mono text-sm">
             <span className="flex h-8 w-8 items-center justify-center rounded-md border border-[#4ade80]/40 bg-[#0d130d] text-xs font-bold text-[#4ade80]">~/</span>
-            <span className="text-[#e8f5e8]">muhammad@portfolio</span>
+            <span className="hidden text-[#e8f5e8] min-[480px]:inline">muhammad@portfolio</span>
             <span className="hidden text-[#5b6b5b] sm:inline">:~$</span>
           </a>
-          <nav className="ml-auto hidden items-center gap-5 font-mono text-xs text-[#9fb49f] md:flex">
-            <a className="transition hover:text-[#4ade80]" href="#explorer">./projects</a>
-            <a className="transition hover:text-[#4ade80]" href="#skills-section">./skills</a>
-            <a className="transition hover:text-[#4ade80]" href="#terminal">./terminal</a>
-            <a className="transition hover:text-[#4ade80]" href="#contact">./contact</a>
-          </nav>
+          <div className="ml-auto flex items-center rounded-lg border border-[#1d2b1d] bg-[#0a0f0a] p-1" role="group" aria-label="View mode">
+            <button
+              type="button"
+              onClick={() => setView("terminal")}
+              aria-pressed={view === "terminal"}
+              className={`rounded-md px-2.5 py-1.5 text-[11px] font-semibold transition focus-visible:outline-2 focus-visible:outline-[#4ade80] sm:px-3 sm:text-xs ${view === "terminal" ? "bg-[#4ade80] text-[#04140a]" : "text-[#9fb49f] hover:text-[#4ade80]"}`}
+            >
+              Terminal View
+            </button>
+            <button
+              type="button"
+              onClick={() => setView("simple")}
+              aria-pressed={view === "simple"}
+              className={`rounded-md px-2.5 py-1.5 text-[11px] font-semibold transition focus-visible:outline-2 focus-visible:outline-[#4ade80] sm:px-3 sm:text-xs ${view === "simple" ? "bg-[#4ade80] text-[#04140a]" : "text-[#9fb49f] hover:text-[#4ade80]"}`}
+            >
+              Simple View
+            </button>
+          </div>
           <a
             href={PROFILE.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="ml-auto rounded-md border border-[#4ade80]/40 px-3 py-1.5 font-mono text-xs text-[#4ade80] transition hover:-translate-y-0.5 hover:bg-[#4ade80] hover:text-[#04140a] focus-visible:outline-2 focus-visible:outline-[#4ade80] md:ml-0"
+            className="hidden rounded-md border border-[#4ade80]/40 px-3 py-1.5 font-mono text-xs text-[#4ade80] transition hover:-translate-y-0.5 hover:bg-[#4ade80] hover:text-[#04140a] focus-visible:outline-2 focus-visible:outline-[#4ade80] sm:inline-block"
           >
             github ↗
           </a>
@@ -205,6 +446,25 @@ export default function Home() {
       </header>
 
       <main id="top" className="mx-auto max-w-5xl px-4 sm:px-6">
+        {view === "terminal" && (
+          <div className="mt-6 flex flex-col gap-3 rounded-xl border border-[#4ade80]/30 bg-[#0a0f0a] px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-sm leading-relaxed text-[#d6e2d6]">
+              <strong className="text-[#f2f7f2]">New here?</strong> This site is styled like a
+              computer terminal. If you prefer a normal, easy-to-read version, switch to Simple View.
+            </p>
+            <button
+              type="button"
+              onClick={() => setView("simple")}
+              className="shrink-0 rounded-md bg-[#4ade80] px-4 py-2 text-sm font-semibold text-[#04140a] transition hover:-translate-y-0.5 hover:bg-[#86efac] focus-visible:outline-2 focus-visible:outline-[#4ade80]"
+            >
+              Switch to Simple View
+            </button>
+          </div>
+        )}
+        {view === "simple" ? (
+          <SimpleView onSwitchToTerminal={() => setView("terminal")} />
+        ) : (
+          <>
         {/* Hero */}
         <section className="pt-10 sm:pt-14">
           <p className="reveal font-mono text-xs text-[#4ade80]">
@@ -540,6 +800,8 @@ export default function Home() {
             </p>
           </div>
         </section>
+          </>
+        )}
       </main>
 
       <footer className="border-t border-[#1d2b1d]">
@@ -548,7 +810,7 @@ export default function Home() {
           <p>
             built with Next.js 16, React 19 &amp; Tailwind CSS ·{" "}
             <a className="text-[#4ade80]" href={PROFILE.github} target="_blank" rel="noopener noreferrer">github ↗</a>
-            {" "}· $ exit
+            {view === "simple" ? " · Simple View" : " · $ exit"}
           </p>
         </div>
       </footer>
