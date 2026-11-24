@@ -176,9 +176,8 @@ export default function MiniTerminal() {
             autoCorrect="off"
             spellCheck={false}
             placeholder="type a command…"
-            className="min-w-0 flex-1 bg-transparent font-mono text-[13px] text-[#e8f5e8] outline-none placeholder:text-[#5b6b5b]"
+            className="min-w-0 flex-1 bg-transparent font-mono text-[13px] caret-[#4ade80] text-[#e8f5e8] outline-none placeholder:text-[#5b6b5b]"
           />
-          <span className="cursor-blink inline-block h-4 w-2 bg-[#4ade80]" aria-hidden="true" />
         </form>
       </div>
 
