@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Muhammad Ali Waqas — AI Engineer",
   description:
-    "Portfolio of Muhammad Ali Waqas, an AI Engineer building machine learning and full-stack products. TruthLens fake-news detection (98.7% accuracy), Job Application Tracker, and Gemini Travel Advisor.",
+    "Portfolio of Muhammad Ali Waqas, an AI Engineer from Lahore, Pakistan. Browse it like a terminal: TruthLens fake-news detection (98.7% accuracy), Job Application Tracker, and Gemini Travel Advisor.",
   openGraph: {
     title: "Muhammad Ali Waqas — AI Engineer",
     description:

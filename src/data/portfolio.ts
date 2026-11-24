@@ -87,15 +87,15 @@ export const PROJECTS: Project[] = [
 export const SKILLS: { group: string; items: string[] }[] = [
   {
     group: "AI & Machine Learning",
-    items: ["Python", "Machine Learning", "NLP", "Scikit-learn", "NLTK", "Model Evaluation"],
+    items: ["Python", "Machine Learning", "NLP", "Scikit-learn", "NLTK", "Model Evaluation", "LangChain", "RAG"],
   },
   {
     group: "Data",
-    items: ["Pandas", "NumPy", "Matplotlib", "Seaborn", "Data Cleaning"],
+    items: ["Pandas", "NumPy", "Matplotlib", "Seaborn", "Data Cleaning", "Vector Embeddings"],
   },
   {
     group: "Web Development",
-    items: ["React", "Next.js", "JavaScript", "Node.js", "Express", "Streamlit", "SQLite"],
+    items: ["React", "Next.js", "JavaScript", "Node.js", "Express", "Streamlit", "SQLite", "Flask"],
   },
   {
     group: "Tools",
