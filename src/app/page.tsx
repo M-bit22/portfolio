@@ -123,7 +123,11 @@ const TOP_LEVEL: NodeId[] = ["about.md", "projects", "skills", "journey.log", "c
 const SKILL_BY_ID: Record<string, number> = { "skills/ai": 0, "skills/data": 1, "skills/web": 2, "skills/tools": 3 };
 const PROJECT_BY_ID: Record<string, number> = { "projects/truthlens": 0, "projects/tracker": 1, "projects/travel": 2 };
 
-function useReveal() {
+function useReveal(view: "terminal" | "simple") {
+  // Re-runs on every view change: when Terminal View is remounted after
+  // toggling back from Simple View, its .reveal elements are brand-new DOM
+  // nodes that no earlier observer ever saw. Without this, they would stay
+  // at opacity: 0 forever (the toggle-back blank-hero bug).
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const els = Array.from(document.querySelectorAll(".reveal"));
@@ -131,9 +135,17 @@ function useReveal() {
       (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add("is-visible")),
       { threshold: 0.12 }
     );
-    els.forEach((el) => io.observe(el));
+    els.forEach((el) => {
+      io.observe(el);
+      // Deterministic: elements already in the viewport (e.g. the hero
+      // after toggling back to Terminal View) show immediately, without
+      // waiting on observer timing or a scroll event. Below-fold elements
+      // are left hidden until the observer fires as the user scrolls.
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) el.classList.add("is-visible");
+    });
     return () => io.disconnect();
-  }, []);
+  }, [view]);
 }
 
 
@@ -365,8 +377,9 @@ function SimpleView({ onSwitchToTerminal }: { onSwitchToTerminal: () => void }) 
 }
 
 export default function Home() {
-  useReveal();
   const [view, setView] = useState<"terminal" | "simple">("terminal");
+  // Must run after `view` exists: re-observes .reveal elements on each toggle.
+  useReveal(view);
   const [selected, setSelected] = useState<NodeId>("projects/truthlens");
   const [openFolders, setOpenFolders] = useState<Set<string>>(new Set(["projects", "skills"]));
   const [query, setQuery] = useState("");
