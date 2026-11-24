@@ -207,6 +207,14 @@ function SimpleView({ onSwitchToTerminal }: { onSwitchToTerminal: () => void }) 
           >
             Contact Me
           </a>
+          <a
+            href={PROFILE.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-md border border-[#1d2b1d] bg-[#0d130d] px-5 py-2.5 text-[#d6e2d6] transition hover:-translate-y-0.5 hover:border-[#4ade80]/50 hover:text-[#4ade80]"
+          >
+            LinkedIn ↗
+          </a>
         </div>
         <div className="mt-8 grid grid-cols-3 gap-3 sm:gap-4">
           {[
@@ -490,6 +498,15 @@ export default function Home() {
           >
             github ↗
           </a>
+          <a
+            href={PROFILE.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-md bg-[#4ade80] px-3 py-1.5 font-mono text-xs font-semibold text-[#04140a] transition hover:-translate-y-0.5 hover:bg-[#86efac] focus-visible:outline-2 focus-visible:outline-[#4ade80]"
+          >
+            <span className="sm:hidden">in ↗</span>
+            <span className="hidden sm:inline">LinkedIn ↗</span>
+          </a>
         </div>
       </header>
 
@@ -547,6 +564,14 @@ export default function Home() {
               className="rounded-md border border-[#1d2b1d] bg-[#0d130d] px-5 py-2.5 text-[#d6e2d6] transition hover:-translate-y-0.5 hover:border-[#4ade80]/50 hover:text-[#4ade80]"
             >
               github — @{PROFILE.githubUsername} ↗
+            </a>
+            <a
+              href={PROFILE.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-md border border-[#1d2b1d] bg-[#0d130d] px-5 py-2.5 text-[#d6e2d6] transition hover:-translate-y-0.5 hover:border-[#4ade80]/50 hover:text-[#4ade80]"
+            >
+              LinkedIn ↗
             </a>
           </div>
 
